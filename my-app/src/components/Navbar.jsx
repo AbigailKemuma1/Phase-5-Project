@@ -24,27 +24,27 @@ const Navbar = () => {
           <div className="hidden md:flex items-center space-x-8">
             <button
               onClick={() => scrollToSection('features')}
-              className="text-gray-600 hover:text-emerald-600 font-medium transition-colors relative group"
+              className="text-gray-600 hover:text-teal-600 font-semibold transition-colors relative group"
             >
               Features
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-600 transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-300 group-hover:w-full"></span>
             </button>
             <button
               onClick={() => scrollToSection('about')}
-              className="text-gray-600 hover:text-emerald-600 font-medium transition-colors relative group"
+              className="text-gray-600 hover:text-teal-600 font-semibold transition-colors relative group"
             >
               About
-              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-emerald-600 transition-all duration-300 group-hover:w-full"></span>
+              <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-300 group-hover:w-full"></span>
             </button>
             <Link
               to="/login"
-              className="text-gray-600 hover:text-emerald-600 font-medium transition-colors"
+              className="text-gray-600 hover:text-teal-600 font-semibold transition-colors"
             >
               Login
             </Link>
             <Link
               to="/signup"
-              className="px-6 py-2.5 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-semibold rounded-lg shadow-lg shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:scale-105 transition-all duration-300"
+              className="px-6 py-2.5 bg-gradient-to-r from-amber-500 to-orange-500 text-white font-bold rounded-lg shadow-lg shadow-orange-500/30 hover:shadow-orange-500/50 hover:scale-105 transition-all duration-300"
             >
               Sign Up
             </Link>

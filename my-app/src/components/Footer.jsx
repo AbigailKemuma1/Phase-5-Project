@@ -37,7 +37,7 @@ const Footer = () => {
               <li>
                 <button
                   onClick={() => scrollToSection('features')}
-                  className="hover:text-emerald-400 transition-colors"
+                  className="hover:text-teal-400 transition-colors"
                 >
                   Features
                 </button>
@@ -45,18 +45,18 @@ const Footer = () => {
               <li>
                 <button
                   onClick={() => scrollToSection('about')}
-                  className="hover:text-emerald-400 transition-colors"
+                  className="hover:text-teal-400 transition-colors"
                 >
                   About
                 </button>
               </li>
               <li>
-                <Link to="/login" className="hover:text-emerald-400 transition-colors">
+                <Link to="/login" className="hover:text-teal-400 transition-colors">
                   Login
                 </Link>
               </li>
               <li>
-                <Link to="/signup" className="hover:text-emerald-400 transition-colors">
+                <Link to="/signup" className="hover:text-teal-400 transition-colors">
                   Sign Up
                 </Link>
               </li>
@@ -68,22 +68,22 @@ const Footer = () => {
             <h3 className="text-white font-bold text-lg mb-4">Connect</h3>
             <ul className="space-y-3">
               <li>
-                <a href="#" className="hover:text-emerald-400 transition-colors">
+                <a href="#" className="hover:text-teal-400 transition-colors">
                   Twitter
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-400 transition-colors">
+                <a href="#" className="hover:text-teal-400 transition-colors">
                   LinkedIn
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-400 transition-colors">
+                <a href="#" className="hover:text-teal-400 transition-colors">
                   GitHub
                 </a>
               </li>
               <li>
-                <a href="#" className="hover:text-emerald-400 transition-colors">
+                <a href="#" className="hover:text-teal-400 transition-colors">
                   Contact
                 </a>
               </li>
@@ -98,13 +98,13 @@ const Footer = () => {
               © 2025 Smart Energy Tracker. All rights reserved.
             </div>
             <div className="flex items-center space-x-6 text-sm">
-              <a href="#" className="text-gray-400 hover:text-emerald-400 transition-colors">
+              <a href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
                 Privacy Policy
               </a>
-              <a href="#" className="text-gray-400 hover:text-emerald-400 transition-colors">
+              <a href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
                 Terms
               </a>
-              <a href="#" className="text-gray-400 hover:text-emerald-400 transition-colors">
+              <a href="#" className="text-gray-400 hover:text-teal-400 transition-colors">
                 Cookie Policy
               </a>
             </div>
