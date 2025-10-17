@@ -20,10 +20,11 @@ const Hero = () => {
   };
 
   return (
-    <section className="relative overflow-hidden bg-gradient-to-br from-gray-50 via-white to-emerald-50 pt-20 pb-32">
+    <section className="relative overflow-hidden bg-gradient-to-br from-emerald-50 via-teal-50 to-blue-50 pt-20 pb-32">
       {/* Decorative Background Elements */}
-      <div className="absolute top-20 left-10 w-72 h-72 bg-emerald-400/20 rounded-full blur-3xl"></div>
-      <div className="absolute bottom-20 right-10 w-96 h-96 bg-blue-400/20 rounded-full blur-3xl"></div>
+      <div className="absolute top-20 left-10 w-96 h-96 bg-gradient-to-br from-emerald-400 to-teal-400 opacity-30 rounded-full blur-3xl animate-pulse"></div>
+      <div className="absolute bottom-20 right-10 w-[500px] h-[500px] bg-gradient-to-br from-blue-400 to-purple-400 opacity-30 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '1s' }}></div>
+      <div className="absolute top-1/2 left-1/2 w-72 h-72 bg-gradient-to-br from-teal-300 to-cyan-300 opacity-20 rounded-full blur-3xl animate-pulse" style={{ animationDelay: '2s' }}></div>
       
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
         <div className="grid lg:grid-cols-2 gap-12 items-center">
@@ -39,16 +40,19 @@ const Hero = () => {
             </div>
 
             {/* Headline */}
-            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight">
+            <h1 className="text-5xl sm:text-6xl lg:text-7xl font-black leading-tight tracking-tight">
               Track your{' '}
-              <span className="bg-gradient-to-r from-emerald-500 via-blue-500 to-purple-500 bg-clip-text text-transparent">
-                energy
+              <span className="relative inline-block">
+                <span className="bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 bg-clip-text text-transparent animate-pulse">
+                  energy
+                </span>
+                <span className="absolute -bottom-2 left-0 w-full h-1 bg-gradient-to-r from-emerald-500 via-teal-500 to-cyan-500 rounded-full"></span>
               </span>
               . Save money. Save the planet.
             </h1>
 
             {/* Subheadline */}
-            <p className="text-xl text-gray-600 leading-relaxed">
+            <p className="text-xl text-gray-700 leading-relaxed font-medium">
               AI-powered insights to help you monitor and reduce your electricity consumption in real-time.
             </p>
 
@@ -56,34 +60,38 @@ const Hero = () => {
             <div className="flex flex-col sm:flex-row gap-4">
               <Link
                 to="/signup"
-                className="group inline-flex items-center justify-center space-x-2 px-8 py-4 bg-gradient-to-r from-emerald-500 to-emerald-600 text-white font-bold rounded-xl shadow-xl shadow-emerald-500/30 hover:shadow-emerald-500/50 hover:-translate-y-1 transition-all duration-300"
+                className="group relative inline-flex items-center justify-center space-x-2 px-8 py-4 bg-gradient-to-r from-amber-500 via-orange-500 to-red-500 text-white font-bold rounded-xl shadow-2xl shadow-orange-500/40 hover:shadow-orange-500/60 hover:scale-105 transition-all duration-300 overflow-hidden"
               >
-                <span>Get Started Free</span>
-                <svg className="w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <span className="absolute inset-0 bg-gradient-to-r from-amber-400 via-orange-400 to-red-400 opacity-0 group-hover:opacity-100 transition-opacity"></span>
+                <span className="relative">Get Started Free</span>
+                <svg className="relative w-5 h-5 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7l5 5m0 0l-5 5m5-5H6" />
                 </svg>
               </Link>
               <button
                 onClick={() => scrollToSection('features')}
-                className="inline-flex items-center justify-center px-8 py-4 border-2 border-gray-300 text-gray-700 font-bold rounded-xl hover:border-emerald-500 hover:text-emerald-600 hover:-translate-y-1 transition-all duration-300"
+                className="group inline-flex items-center justify-center space-x-2 px-8 py-4 bg-white border-2 border-gray-300 text-gray-700 font-bold rounded-xl hover:border-teal-500 hover:text-teal-600 hover:bg-teal-50 hover:-translate-y-1 transition-all duration-300 shadow-lg"
               >
-                See How It Works
+                <span>See How It Works</span>
+                <svg className="w-5 h-5 group-hover:translate-y-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                </svg>
               </button>
             </div>
 
             {/* Stats Bar */}
             <div className="grid grid-cols-3 gap-6 pt-8">
-              <div className="text-center">
-                <div className="text-3xl font-black text-gray-900">10K+</div>
-                <div className="text-sm text-gray-600 mt-1">Active Users</div>
+              <div className="group text-center p-4 rounded-2xl hover:bg-white/80 transition-all">
+                <div className="text-3xl font-black bg-gradient-to-r from-emerald-600 to-teal-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform inline-block">10K+</div>
+                <div className="text-sm text-gray-600 mt-1 font-semibold">Active Users</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-black text-emerald-600">30%</div>
-                <div className="text-sm text-gray-600 mt-1">Avg. Savings</div>
+              <div className="group text-center p-4 rounded-2xl hover:bg-white/80 transition-all">
+                <div className="text-3xl font-black bg-gradient-to-r from-amber-600 to-orange-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform inline-block">30%</div>
+                <div className="text-sm text-gray-600 mt-1 font-semibold">Avg. Savings</div>
               </div>
-              <div className="text-center">
-                <div className="text-3xl font-black text-blue-600">2.5M</div>
-                <div className="text-sm text-gray-600 mt-1">kWh Saved</div>
+              <div className="group text-center p-4 rounded-2xl hover:bg-white/80 transition-all">
+                <div className="text-3xl font-black bg-gradient-to-r from-blue-600 to-cyan-600 bg-clip-text text-transparent group-hover:scale-110 transition-transform inline-block">2.5M</div>
+                <div className="text-sm text-gray-600 mt-1 font-semibold">kWh Saved</div>
               </div>
             </div>
           </div>
@@ -91,7 +99,7 @@ const Hero = () => {
           {/* Right Content - Dashboard Preview (Desktop only) */}
           <div className="hidden lg:block relative">
             {/* Main Dashboard Card */}
-            <div className="relative bg-white rounded-3xl shadow-2xl p-8 border border-gray-100">
+            <div className="relative bg-white/90 backdrop-blur-xl rounded-3xl shadow-2xl p-8 border border-gray-200 hover:shadow-3xl hover:scale-[1.02] transition-all duration-500">
               {/* Header */}
               <div className="flex items-center justify-between mb-8">
                 <div>
