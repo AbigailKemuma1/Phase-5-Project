@@ -1,52 +1,20 @@
 import { useState } from 'react';
+import DashboardLayout from '../components/DashboardLayout';
 
 const Appliances = () => {
   const [appliances] = useState([
-    { id: 1, name: 'Refrigerator', wattage: 150, dailyUse: 24, monthlyCost: 15.84 },
-    { id: 2, name: 'Living Room TV', wattage: 120, dailyUse: 4, monthlyCost: 4.22 },
-    { id: 3, name: 'Microwave', wattage: 1200, dailyUse: 0.5, monthlyCost: 5.28 },
-    { id: 4, name: 'Laptop Charger', wattage: 65, dailyUse: 8, monthlyCost: 4.57 },
+    { id: 1, name: 'Refrigerator', icon: '🧊', wattage: 150, dailyUse: 24, monthlyCost: 15.84, status: 'on', category: 'Kitchen' },
+    { id: 2, name: 'Air Conditioner', icon: '❄️', wattage: 2000, dailyUse: 8, monthlyCost: 45.00, status: 'on', category: 'Cooling' },
+    { id: 3, name: 'Living Room TV', icon: '📺', wattage: 120, dailyUse: 4, monthlyCost: 4.22, status: 'off', category: 'Entertainment' },
+    { id: 4, name: 'Microwave', icon: '🍽️', wattage: 1200, dailyUse: 0.5, monthlyCost: 5.28, status: 'off', category: 'Kitchen' },
+    { id: 5, name: 'Laptop Charger', icon: '💻', wattage: 65, dailyUse: 8, monthlyCost: 4.57, status: 'on', category: 'Electronics' },
+    { id: 6, name: 'Water Heater', icon: '🔥', wattage: 3000, dailyUse: 2, monthlyCost: 20.88, status: 'on', category: 'Heating' },
+    { id: 7, name: 'Washing Machine', icon: '🧺', wattage: 500, dailyUse: 1, monthlyCost: 5.50, status: 'off', category: 'Appliances' },
+    { id: 8, name: 'LED Lights', icon: '💡', wattage: 10, dailyUse: 6, monthlyCost: 0.66, status: 'on', category: 'Lighting' },
   ]);
 
   return (
-    <div className="min-h-screen bg-gray-900 text-white">
-      {/* Header */}
-      <header className="bg-gray-800 border-b border-gray-700 px-6 py-4">
-        <div className="flex items-center justify-between">
-          <div className="flex items-center space-x-3">
-            <div className="w-8 h-8 bg-gradient-to-br from-emerald-400 to-teal-500 rounded-lg flex items-center justify-center">
-              <span className="text-white text-lg">⚡</span>
-            </div>
-            <h1 className="text-2xl font-bold">EnergyWatch</h1>
-          </div>
-          
-          <nav className="flex items-center space-x-6">
-            <a href="#" className="text-gray-300 hover:text-white transition-colors">Dashboard</a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors">Reports</a>
-            <a href="#" className="text-emerald-400 font-medium">Appliances</a>
-            <a href="#" className="text-gray-300 hover:text-white transition-colors">Settings</a>
-          </nav>
-          
-          <div className="flex items-center space-x-4">
-            <button className="bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg transition-colors">Help</button>
-            <button className="text-gray-400 hover:text-white">
-              <span className="text-xl">🔔</span>
-            </button>
-            <div className="flex items-center space-x-2">
-              <div className="w-8 h-8 bg-gray-600 rounded-full flex items-center justify-center">
-                <span className="text-sm">👤</span>
-              </div>
-              <div>
-                <p className="text-sm font-medium">Jane Doe</p>
-                <p className="text-xs text-gray-400">jane.doe@example.com</p>
-              </div>
-            </div>
-          </div>
-        </div>
-      </header>
-
-      {/* Main Content */}
-      <main className="p-6">
+    <DashboardLayout title="Appliances">
         {/* Page Header */}
         <div className="flex items-center justify-between mb-8">
           <div>
@@ -90,35 +58,47 @@ const Appliances = () => {
             <thead className="bg-gray-700">
               <tr>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">APPLIANCE NAME</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">WATTAGE (W)</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">AVG. DAILY USE (HRS)</th>
-                <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">EST. MONTHLY COST</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">WATTAGE</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">AVG. DAILY USE</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">MONTHLY COST</th>
+                <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">STATUS</th>
                 <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">ACTIONS</th>
               </tr>
             </thead>
             <tbody>
               {appliances.map((appliance) => (
-                <tr key={appliance.id} className="border-b border-gray-700 hover:bg-gray-750 transition-colors">
+                <tr key={appliance.id} className="border-b border-gray-700 hover:bg-gray-700/50 transition-colors cursor-pointer">
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-3">
-                      <span className="text-2xl">
-                        {appliance.name === 'Refrigerator' && '🧊'}
-                        {appliance.name === 'Living Room TV' && '📺'}
-                        {appliance.name === 'Microwave' && '🍽️'}
-                        {appliance.name === 'Laptop Charger' && '💻'}
-                      </span>
-                      <span className="font-medium">{appliance.name}</span>
+                      <span className="text-2xl">{appliance.icon}</span>
+                      <div>
+                        <span className="font-medium block">{appliance.name}</span>
+                        <span className="text-xs text-gray-400">{appliance.category}</span>
+                      </div>
                     </div>
                   </td>
-                  <td className="px-6 py-4 text-gray-300">{appliance.wattage}</td>
-                  <td className="px-6 py-4 text-gray-300">{appliance.dailyUse}</td>
-                  <td className="px-6 py-4 text-gray-300">${appliance.monthlyCost}</td>
+                  <td className="px-6 py-4 text-gray-300">{appliance.wattage}W</td>
+                  <td className="px-6 py-4 text-gray-300">{appliance.dailyUse}h</td>
+                  <td className="px-6 py-4">
+                    <span className="text-emerald-400 font-medium">${appliance.monthlyCost.toFixed(2)}</span>
+                  </td>
                   <td className="px-6 py-4">
                     <div className="flex items-center space-x-2">
-                      <button className="text-gray-400 hover:text-blue-400 transition-colors">
+                      <div className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        appliance.status === 'on' 
+                          ? 'bg-emerald-500/20 text-emerald-400' 
+                          : 'bg-gray-600/50 text-gray-400'
+                      }`}>
+                        {appliance.status.toUpperCase()}
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-6 py-4">
+                    <div className="flex items-center space-x-2">
+                      <button className="p-2 rounded-lg bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 transition-colors">
                         <span className="text-lg">✏️</span>
                       </button>
-                      <button className="text-gray-400 hover:text-red-400 transition-colors">
+                      <button className="p-2 rounded-lg bg-red-600/20 text-red-400 hover:bg-red-600/30 transition-colors">
                         <span className="text-lg">🗑️</span>
                       </button>
                     </div>
@@ -131,19 +111,44 @@ const Appliances = () => {
 
         {/* Pagination */}
         <div className="flex items-center justify-between mt-6">
-          <p className="text-gray-400">Showing 1 to 4 of 27 results.</p>
+          <p className="text-gray-400">Showing 1 to 8 of 8 appliances</p>
           <div className="flex items-center space-x-2">
-            <button className="px-3 py-2 text-gray-400 hover:text-white transition-colors">←</button>
-            <button className="px-3 py-2 bg-emerald-600 text-white rounded">1</button>
-            <button className="px-3 py-2 text-gray-400 hover:text-white transition-colors">2</button>
-            <button className="px-3 py-2 text-gray-400 hover:text-white transition-colors">3</button>
-            <span className="px-2 text-gray-400">...</span>
-            <button className="px-3 py-2 text-gray-400 hover:text-white transition-colors">10</button>
-            <button className="px-3 py-2 text-gray-400 hover:text-white transition-colors">→</button>
+            <button className="px-3 py-2 text-gray-400 hover:text-white transition-colors disabled:opacity-50" disabled>←</button>
+            <button className="px-3 py-2 bg-emerald-600 text-white rounded-lg">1</button>
+            <button className="px-3 py-2 text-gray-400 hover:text-white transition-colors disabled:opacity-50" disabled>→</button>
           </div>
         </div>
-      </main>
-    </div>
+
+        {/* Summary Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-8">
+          <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl p-6 border border-gray-600">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-gray-400 text-sm">Total Appliances</span>
+              <span className="text-2xl">🔌</span>
+            </div>
+            <p className="text-3xl font-bold">{appliances.length}</p>
+            <p className="text-emerald-400 text-sm mt-1">{appliances.filter(a => a.status === 'on').length} active now</p>
+          </div>
+
+          <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl p-6 border border-gray-600">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-gray-400 text-sm">Total Monthly Cost</span>
+              <span className="text-2xl">💰</span>
+            </div>
+            <p className="text-3xl font-bold">${appliances.reduce((sum, a) => sum + a.monthlyCost, 0).toFixed(2)}</p>
+            <p className="text-gray-400 text-sm mt-1">estimated</p>
+          </div>
+
+          <div className="bg-gradient-to-br from-gray-800 to-gray-700 rounded-xl p-6 border border-gray-600">
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-gray-400 text-sm">Highest Consumer</span>
+              <span className="text-2xl">📊</span>
+            </div>
+            <p className="text-3xl font-bold">{appliances.sort((a, b) => b.monthlyCost - a.monthlyCost)[0].name}</p>
+            <p className="text-orange-400 text-sm mt-1">${appliances.sort((a, b) => b.monthlyCost - a.monthlyCost)[0].monthlyCost.toFixed(2)}/month</p>
+          </div>
+        </div>
+    </DashboardLayout>
   );
 };
 
