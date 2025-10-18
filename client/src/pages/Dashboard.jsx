@@ -1,10 +1,7 @@
-import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import DashboardLayout from '../components/DashboardLayout';
 
 const Dashboard = () => {
-  const [activeTab, setActiveTab] = useState('dashboard');
-
   return (
     <DashboardLayout title="Dashboard">
           {/* Welcome Section */}
