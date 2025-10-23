@@ -24,14 +24,12 @@ RECOMMENDATIONS = {
     "lighting": "Switch to LED bulbs and turn off lights when not in use."
 }
 
-# In-memory conversation storage
-# Key: user_id, Value: list of messages (role + content)
 conversations = {}
 
 @app.route("/chat", methods=["POST"])
 def chat():
     data = request.get_json()
-    user_id = data.get("user_id", "default")  # default user if none provided
+    user_id = data.get("user_id", "default")  
     user_message = data.get("message", "")
 
     # Initialize conversation if it doesn't exist

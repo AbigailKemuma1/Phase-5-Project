@@ -16,10 +16,8 @@ def create_app():
     bcrypt.init_app(app)
     jwt.init_app(app)
 
-    # ✅ Enable CORS for all routes (React frontend -> Flask backend)
     CORS(app, resources={r"/auth/*": {"origins": "*"}}, supports_credentials=True)
 
-    # Register blueprints
     from app.routes.auth import auth_bp
     app.register_blueprint(auth_bp, url_prefix="/auth")
 
