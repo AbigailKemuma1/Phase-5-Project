@@ -1,13 +1,52 @@
+
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import openai
 import os
+from config import Config
+import logging
+from dotenv import load_dotenv
+
+# Load environment variables from .env
+load_dotenv()
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 app = Flask(__name__)
-CORS(app)  # allow requests from React frontend
+app.config.from_object(Config)
+CORS(app)  # Enable CORS for all routes
+
+from flask import Flask, request, jsonify
+from flask_cors import CORS
+import openai
+import os
+from config import Config
+import logging
+
+# Set up logging
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
+
+app = Flask(__name__)
+app.config.from_object(Config)
+CORS(app)  # Enable CORS for all routes
+
+# Additional CORS headers
+@app.after_request
+def after_request(response):
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+    response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+    return response
 
 # Use environment variable for safety
 openai.api_key = os.getenv("OPENAI_API_KEY")
+logger.info(f"OpenAI API Key {'is set' if openai.api_key else 'is NOT set'}")
+
+if not openai.api_key:
+    print("⚠️ Warning: OPENAI_API_KEY not set. Chatbot will use fallback responses.")
 
 # FAQs for quick responses
 FAQS = {
@@ -28,11 +67,26 @@ RECOMMENDATIONS = {
 # Key: user_id, Value: list of messages (role + content)
 conversations = {}
 
-@app.route("/chat", methods=["POST"])
+@app.route("/chat", methods=["POST", "OPTIONS"])
 def chat():
+    logger.info(f"Received {request.method} request from {request.origin if hasattr(request, 'origin') else 'unknown'}")
+    if request.method == "OPTIONS":
+        logger.info("Handling CORS preflight request")
+        response = app.make_response(('', 200))
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
+        return response
+
     data = request.get_json()
+    if not data:
+        return jsonify({"error": "No data provided"}), 400
+
     user_id = data.get("user_id", "default")  # default user if none provided
     user_message = data.get("message", "")
+    
+    if not user_message:
+        return jsonify({"error": "No message provided"}), 400
 
     # Initialize conversation if it doesn't exist
     if user_id not in conversations:
@@ -60,20 +114,37 @@ def chat():
 
     # Generate AI response with GPT-4
     try:
-        response = openai.ChatCompletion.create(
-            model="gpt-4",
-            messages=conversations[user_id],
-            temperature=0.7,
-            max_tokens=200
-        )
-        answer = response.choices[0].message["content"].strip()
+        if not openai.api_key:
+            logger.warning("No OpenAI API key set - using fallback response")
+            # Use the last FAQ or recommendation that matched, or a default response
+            answer = "I'm currently in maintenance mode. Here are some general energy-saving tips:\n" + \
+                    "1. Turn off lights when not in use\n" + \
+                    "2. Use energy-efficient appliances\n" + \
+                    "3. Keep your thermostat at optimal temperatures\n" + \
+                    "4. Regular maintenance of HVAC systems"
+        else:
+            logger.info(f"Sending request to OpenAI API for user {user_id}")
+            response = openai.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=conversations[user_id],
+                temperature=0.7,
+                max_tokens=200
+            )
+            answer = response.choices[0].message.content.strip()
+            
         # Save AI response to conversation
         conversations[user_id].append({"role": "assistant", "content": answer})
+        logger.info(f"Successfully generated response for user {user_id}")
+        
     except Exception as e:
-        print(e)
-        answer = "Sorry, I couldn't process your request right now."
+        logger.error(f"Error generating response: {str(e)}")
+        if "api_key" in str(e).lower():
+            answer = "The AI service is currently unavailable. Please check your API key configuration."
+        else:
+            answer = f"I'm having trouble processing your request. Error: {str(e)}"
 
     return jsonify({"response": answer})
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    print("✅ Chat server running on http://127.0.0.1:3000")
+    app.run(debug=True, port=3000, host='127.0.0.1')
