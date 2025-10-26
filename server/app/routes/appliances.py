@@ -3,9 +3,9 @@ from flask_jwt_extended import jwt_required, get_jwt_identity
 from app import db
 from app.models import Appliance
 
-appliances_bp = Blueprint("appliances", __name__)
+appliance_bp = Blueprint("appliance_bp", __name__)
 
-@appliances_bp.route("/", methods=["GET"])
+@appliance_bp.route("/", methods=["GET"])
 @jwt_required()
 def get_appliances():
     user_id = get_jwt_identity()
@@ -13,7 +13,7 @@ def get_appliances():
     return jsonify([a.to_dict() for a in appliances]), 200
 
 
-@appliances_bp.route("/", methods=["POST"])
+@appliance_bp.route("/", methods=["POST"])
 @jwt_required()
 def add_appliance():
     user_id = get_jwt_identity()
@@ -40,7 +40,7 @@ def add_appliance():
 
 
 # ✅ Update an appliance
-@appliances_bp.route("/<int:id>", methods=["PATCH"])
+@appliance_bp.route("/<int:id>", methods=["PATCH"])
 @jwt_required()
 def update_appliance(id):
     user_id = get_jwt_identity()
@@ -58,7 +58,7 @@ def update_appliance(id):
 
 
 # ✅ Delete an appliance
-@appliances_bp.route("/<int:id>", methods=["DELETE"])
+@appliance_bp.route("/<int:id>", methods=["DELETE"])
 @jwt_required()
 def delete_appliance(id):
     user_id = get_jwt_identity()
