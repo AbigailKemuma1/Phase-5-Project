@@ -7,6 +7,22 @@ class User(db.Model):
     username = db.Column(db.String(50), unique=True, nullable=False)
     email = db.Column(db.String(100), unique=True, nullable=False)
     password = db.Column(db.String(200), nullable=False)
+    
+    # Profile fields
+    phone = db.Column(db.String(20), nullable=True)
+    address = db.Column(db.String(200), nullable=True)
+    energy_goal = db.Column(db.Float, nullable=True)
+    
+    # Notification preferences (stored as JSON string or separate table)
+    email_notifications = db.Column(db.Boolean, default=True)
+    push_notifications = db.Column(db.Boolean, default=True)
+    weekly_reports = db.Column(db.Boolean, default=True)
+    usage_alerts = db.Column(db.Boolean, default=True)
+    
+    # App preferences
+    currency = db.Column(db.String(10), default='USD')
+    energy_unit = db.Column(db.String(10), default='kWh')
+    theme = db.Column(db.String(10), default='dark')
 
     # One user → many appliances
     appliances = db.relationship("Appliance", backref="user", lazy=True, cascade="all, delete-orphan")
@@ -16,6 +32,20 @@ class User(db.Model):
             "id": self.id,
             "username": self.username,
             "email": self.email,
+            "phone": self.phone,
+            "address": self.address,
+            "energy_goal": self.energy_goal,
+            "notifications": {
+                "email": self.email_notifications,
+                "push": self.push_notifications,
+                "weekly": self.weekly_reports,
+                "alerts": self.usage_alerts
+            },
+            "preferences": {
+                "currency": self.currency,
+                "energyUnit": self.energy_unit,
+                "theme": self.theme
+            },
             "appliances": [a.to_dict() for a in self.appliances]
         }
 

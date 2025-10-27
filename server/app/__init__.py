@@ -23,11 +23,13 @@ def create_app():
 
     # Import blueprints
     from app.routes.auth import auth_bp
-    from app.routes.appliances import appliance_bp
+    from app.routes.appliances import appliances_bp
+    from app.routes.users import users_bp
 
     # Register blueprints
     app.register_blueprint(auth_bp, url_prefix="/auth")
-    app.register_blueprint(appliance_bp)  # already includes /appliances/ in its routes
+    app.register_blueprint(appliances_bp, url_prefix="/appliances")
+    app.register_blueprint(users_bp, url_prefix="/users")
 
     # Create database tables if they don't exist
     with app.app_context():
