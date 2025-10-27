@@ -14,7 +14,7 @@ jwt = JWTManager()
 
 def create_app():
     app = Flask(__name__)
-    app.config.from_object("config.Config")  # Make sure you have a Config class in config.py
+    app.config.from_object("config.Config")  # Ensure you have a Config class in config.py
 
     # Initialize extensions
     db.init_app(app)
@@ -27,10 +27,12 @@ def create_app():
     # Import blueprints
     from app.routes.auth import auth_bp
     from app.routes.appliances import appliance_bp
+    from app.routes.analytics import analytics_bp  # ✅ Analytics blueprint
 
-    # Register blueprints with proper prefixes
+    # Register blueprints
     app.register_blueprint(auth_bp, url_prefix="/auth")
-    app.register_blueprint(appliance_bp, url_prefix="/appliances")  # ✅ fixed prefix
+    app.register_blueprint(appliance_bp, url_prefix="/appliances")
+    app.register_blueprint(analytics_bp, url_prefix="/analytics")  # ✅ Added analytics
 
     # Set up logging
     logging.basicConfig(level=logging.INFO)
@@ -56,7 +58,7 @@ def create_app():
 
     @app.route("/chat", methods=["POST", "OPTIONS"])
     def chat():
-        logger.info(f"Received {request.method} request from {request.origin if hasattr(request, 'origin') else 'unknown'}")
+        logger.info(f"Received {request.method} request from {getattr(request, 'origin', 'unknown')}")
         if request.method == "OPTIONS":
             logger.info("Handling CORS preflight request")
             response = jsonify({"message": "CORS preflight passed"})
