@@ -1,10 +1,16 @@
 import { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import EnergyAdvisor from '../components/EnergyAdvisor';
 
 const DashboardLayout = ({ children, title }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
   const location = useLocation();
+  const navigate = useNavigate();
+
+  const handleLogout = () => {
+    localStorage.removeItem('access_token');
+    navigate('/login');
+  };
 
   const navigation = [
     { name: 'Dashboard', href: '/dashboard', icon: '📊', current: location.pathname === '/dashboard' },
@@ -49,7 +55,7 @@ const DashboardLayout = ({ children, title }) => {
         </nav>
 
         {/* User Profile */}
-        <div className="p-4 border-t border-gray-700">
+        <div className="p-4 border-t border-gray-700 space-y-3">
           <div className="flex items-center space-x-3">
             <div className="w-8 h-8 bg-gradient-to-br from-blue-400 to-purple-500 rounded-full flex items-center justify-center">
               <span className="text-white text-sm font-bold">JD</span>
@@ -61,6 +67,15 @@ const DashboardLayout = ({ children, title }) => {
               </div>
             )}
           </div>
+          {sidebarOpen && (
+            <button
+              onClick={handleLogout}
+              className="w-full bg-red-600 hover:bg-red-700 text-white px-3 py-2 rounded-lg transition-colors flex items-center justify-center space-x-2"
+            >
+              <span>🚪</span>
+              <span className="text-sm font-medium">Logout</span>
+            </button>
+          )}
         </div>
       </div>
 
