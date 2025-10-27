@@ -1,0 +1,83 @@
+nohup: ignoring input
+INFO:chatbot:OpenAI API Key is NOT set
+INFO:chatbot:OpenAI API Key is NOT set
+⚠️ Warning: OPENAI_API_KEY not set. Chatbot will use fallback responses.
+⚠️ Warning: OPENAI_API_KEY not set. Chatbot will use fallback responses.
+✅ Flask server is running on http://127.0.0.1:3000
+✅ Chat endpoint available at http://127.0.0.1:3000/chat
+ * Serving Flask app 'app'
+ * Debug mode: on
+INFO:werkzeug:[31m[1mWARNING: This is a development server. Do not use it in a production deployment. Use a production WSGI server instead.[0m
+ * Running on http://127.0.0.1:3000
+INFO:werkzeug:[33mPress CTRL+C to quit[0m
+INFO:werkzeug: * Restarting with stat
+INFO:chatbot:OpenAI API Key is NOT set
+INFO:chatbot:OpenAI API Key is NOT set
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 988-142-857
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:03:33] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:03:33] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:03:33] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:03:33] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:03:34] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:03:34] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:03:34] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:03:34] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:04:29] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:04:29] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:04:29] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:04:29] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:04:33] "GET /energy-summary?period=week HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:04:34] "GET /energy-summary?period=month HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:04:35] "GET /energy-summary?period=year HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:06:52] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:06:52] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:06:52] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:06:52] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:07:10] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:07:10] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:07:10] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:07:10] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:07:16] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:07:16] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:07:16] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:07:16] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:07:17] "GET /energy-summary?period=week HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:08:59] "OPTIONS /auth/login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:08:59] "[31m[1mPOST /auth/login HTTP/1.1[0m" 401 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:09:04] "POST /auth/login HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:09:04] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:09:04] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:09:04] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:09:04] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:10:11] "GET /energy-summary?period=week HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:10:11] "GET /energy-summary?period=month HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 08:10:12] "GET /energy-summary?period=year HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 09:32:42] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 09:32:42] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 09:32:42] "GET /appliances HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 09:32:42] "GET /energy-summary?period=today HTTP/1.1" 200 -
+INFO:werkzeug: * Detected change in '/home/code/Documents/Developments/Phase4/Phase-5-Project/server/app/routes/gemini.py', reloading
+⚠️ Warning: OPENAI_API_KEY not set. Chatbot will use fallback responses.
+⚠️ Warning: OPENAI_API_KEY not set. Chatbot will use fallback responses.
+✅ Flask server is running on http://127.0.0.1:3000
+✅ Chat endpoint available at http://127.0.0.1:3000/chat
+INFO:werkzeug: * Restarting with stat
+INFO:chatbot:OpenAI API Key is NOT set
+INFO:chatbot:OpenAI API Key is NOT set
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 988-142-857
+INFO:werkzeug: * Detected change in '/home/code/Documents/Developments/Phase4/Phase-5-Project/server/app/__init__.py', reloading
+⚠️ Warning: OPENAI_API_KEY not set. Chatbot will use fallback responses.
+⚠️ Warning: OPENAI_API_KEY not set. Chatbot will use fallback responses.
+✅ Flask server is running on http://127.0.0.1:3000
+✅ Chat endpoint available at http://127.0.0.1:3000/chat
+INFO:werkzeug: * Restarting with stat
+INFO:chatbot:OpenAI API Key is NOT set
+INFO:chatbot:OpenAI API Key is NOT set
+WARNING:werkzeug: * Debugger is active!
+INFO:werkzeug: * Debugger PIN: 988-142-857
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 09:36:40] "OPTIONS /gemini-chat HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 09:36:40] "[35m[1mPOST /gemini-chat HTTP/1.1[0m" 500 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 09:39:42] "OPTIONS /gemini-chat HTTP/1.1" 200 -
+INFO:werkzeug:127.0.0.1 - - [27/Oct/2025 09:39:42] "[35m[1mPOST /gemini-chat HTTP/1.1[0m" 500 -

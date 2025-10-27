@@ -1,6 +1,8 @@
 import { useState, useRef, useEffect } from "react";
 
 const EnergyAdvisor = () => {
+  const messagesEndRef = useRef(null);
+  const [open, setOpen] = useState(false);
   const [messages, setMessages] = useState([
     {
       role: "assistant",
@@ -8,10 +10,6 @@ const EnergyAdvisor = () => {
     },
   ]);
   const [input, setInput] = useState("");
-  const [open, setOpen] = useState(false);
-  const messagesEndRef = useRef(null);
-
-  // Position state for dragging
   const [position, setPosition] = useState({ x: 20, y: 20 });
   const [dragging, setDragging] = useState(false);
   const dragOffset = useRef({ x: 0, y: 0 });
@@ -29,17 +27,45 @@ const EnergyAdvisor = () => {
     setInput("");
 
     try {
-      const response = await fetch("http://127.0.0.1:5000/chat", {
+      // Add visual feedback that we're sending the message
+      const loadingMessage = { role: "assistant", content: "Thinking..." };
+      setMessages((prev) => [...prev, loadingMessage]);
+
+      console.log("Attempting to connect to chat server...");
+  const response = await fetch("http://127.0.0.1:5000/chat", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
+        headers: { 
+          "Content-Type": "application/json",
+          "Accept": "application/json"
+        },
+        mode: "cors",
         body: JSON.stringify({ message: input, user_id: "user123" }),
       });
+      
+      console.log("Response status:", response.status);
+      console.log("Response headers:", Object.fromEntries(response.headers.entries()));
+
+      if (!response.ok) {
+        throw new Error(`Server responded with status: ${response.status}`);
+      }
 
       const data = await response.json();
+      console.log("Received response data:", data);
+      
+      // Remove the loading message
+      setMessages((prev) => prev.filter(msg => msg.content !== "Thinking..."));
+      
       const aiMessage = { role: "assistant", content: data.response };
       setMessages((prev) => [...prev, aiMessage]);
     } catch (err) {
-      const errorMessage = { role: "assistant", content: "Sorry, something went wrong." };
+      console.error("Chat Error:", err);
+      // Remove the loading message
+      setMessages((prev) => prev.filter(msg => msg.content !== "Thinking..."));
+      
+      const errorMessage = { 
+        role: "assistant", 
+  content: `Connection Error: ${err.message}. Please check that http://127.0.0.1:5000 is accessible.` 
+      };
       setMessages((prev) => [...prev, errorMessage]);
     }
   };
