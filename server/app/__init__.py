@@ -1,4 +1,4 @@
-from flask import Flask, request, jsonify
+from flask import Flask
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
@@ -22,7 +22,7 @@ def create_app():
     CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
     from app.routes.auth import auth_bp
-    from app.routes.appliances import appliances_bp
+    from app.routes.appliances import appliance_bp
     from app.routes.users import users_bp
     from app.routes.analytics import analytics_bp  # ✅ Analytics blueprint
 
