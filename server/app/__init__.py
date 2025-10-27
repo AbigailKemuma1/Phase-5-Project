@@ -27,7 +27,7 @@ def create_app():
     from app.routes.analytics import analytics_bp  # ✅ Analytics blueprint
 
     app.register_blueprint(auth_bp, url_prefix="/auth")
-    app.register_blueprint(appliances_bp, url_prefix="/appliances")
+    app.register_blueprint(appliance_bp, url_prefix="/appliances")
     app.register_blueprint(users_bp, url_prefix="/users")
     app.register_blueprint(analytics_bp, url_prefix="/analytics")  # ✅ Added analytics
 
