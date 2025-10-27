@@ -23,29 +23,41 @@ const Login = () => {
       : { username, email, password };
 
     try {
+      console.log('Submitting login to', endpoint, payload);
       const res = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(payload),
       });
 
-      const data = await res.json();
+      const text = await res.text();
+      let data = {};
+      try {
+        data = JSON.parse(text || '{}');
+      } catch (e) {
+        console.error('Failed to parse JSON response', text);
+      }
+
+      console.log('Login response', res.status, data);
 
       if (!res.ok) {
-        throw new Error(data.msg || 'Something went wrong');
+        throw new Error(data.msg || data.error || `HTTP ${res.status}`);
       }
 
       if (isLogin) {
-        // Save token and redirect
         localStorage.setItem('token', data.access_token);
-        setMessage('✅ Login successful!');
-        navigate('/dashboard'); // redirect after login
+        if (data.username) {
+          localStorage.setItem('username', data.username);
+        }
+        setMessage('Login successful!');
+        navigate('/dashboard');
       } else {
-        setMessage('✅ Account created! Please log in.');
+        setMessage('Account created! Please log in.');
         setIsLogin(true);
       }
     } catch (error) {
-      setMessage(`❌ ${error.message}`);
+      console.error('Login error:', error);
+      setMessage(`Login failed: ${error.message}`);
     }
   };
 

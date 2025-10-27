@@ -14,7 +14,7 @@ function AddApplianceForm({ onAdd }) {
 
     const token = localStorage.getItem("token");
     try {
-      const response = await fetch("http://127.0.0.1:5000/appliances", {
+      const response = await fetch("http://127.0.0.1:5000/appliances/", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

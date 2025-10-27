@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import DashboardLayout from "../components/DashboardLayout";
 
-const API_URL = "http://127.0.0.1:5000/appliances/"; // make sure trailing slash matches Flask route
+const API_URL = "http://127.0.0.1:5000/appliances"; // no trailing slash
 
 const Appliances = () => {
   const [appliances, setAppliances] = useState([]);
@@ -13,13 +13,13 @@ const Appliances = () => {
     power_rating: "",
     hours_per_day: "",
   });
-  const token = localStorage.getItem("token"); // ensure consistent key
+  const token = localStorage.getItem("token");
 
-  // Fetch appliances for logged-in user
+  // Fetch appliances
   useEffect(() => {
     const fetchAppliances = async () => {
       try {
-        const response = await fetch(API_URL, {
+        const response = await fetch(`${API_URL}/`, { // GET needs trailing slash
           headers: { Authorization: `Bearer ${token}` },
         });
         const data = await response.json();
@@ -42,11 +42,10 @@ const Appliances = () => {
   // Add or update appliance
   const handleSubmit = async (e) => {
     e.preventDefault();
-
     const method = editingAppliance ? "PATCH" : "POST";
     const url = editingAppliance
-      ? `${API_URL}${editingAppliance.id}`
-      : API_URL;
+      ? `${API_URL}/${editingAppliance.id}` // PATCH/delete: no trailing slash
+      : `${API_URL}/`; // POST: trailing slash
 
     try {
       const response = await fetch(url, {
@@ -73,7 +72,6 @@ const Appliances = () => {
           setAppliances((prev) => [...prev, data]);
         }
 
-        // Reset form
         setFormData({ name: "", power_rating: "", hours_per_day: "" });
         setEditingAppliance(null);
         setShowForm(false);
@@ -82,6 +80,7 @@ const Appliances = () => {
       }
     } catch (err) {
       console.error("Error saving appliance:", err);
+      alert("Network error. Could not save appliance.");
     }
   };
 
@@ -90,14 +89,23 @@ const Appliances = () => {
     if (!window.confirm("Are you sure you want to delete this appliance?")) return;
 
     try {
-      const response = await fetch(`${API_URL}${id}`, {
+      const response = await fetch(`${API_URL}/${id}`, {
         method: "DELETE",
-        headers: { Authorization: `Bearer ${token}` },
+        headers: {
+          Authorization: `Bearer ${token}`, // no Content-Type for DELETE
+        },
       });
 
-      if (response.ok) setAppliances((prev) => prev.filter((a) => a.id !== id));
+      if (response.ok) {
+        setAppliances((prev) => prev.filter((a) => a.id !== id));
+      } else {
+        const errData = await response.json();
+        console.error("Failed to delete appliance:", errData);
+        alert(errData.error || "Failed to delete appliance");
+      }
     } catch (err) {
       console.error("Error deleting appliance:", err);
+      alert("Network error. Could not delete appliance.");
     }
   };
 
@@ -112,7 +120,12 @@ const Appliances = () => {
     setShowForm(true);
   };
 
-  if (loading) return <DashboardLayout title="Appliances"><p>Loading...</p></DashboardLayout>;
+  if (loading)
+    return (
+      <DashboardLayout title="Appliances">
+        <p>Loading...</p>
+      </DashboardLayout>
+    );
 
   return (
     <DashboardLayout title="Appliances">
@@ -139,7 +152,10 @@ const Appliances = () => {
 
       {/* Add/Edit Form */}
       {showForm && (
-        <form onSubmit={handleSubmit} className="bg-gray-800 rounded-xl p-6 mb-6 border border-gray-700">
+        <form
+          onSubmit={handleSubmit}
+          className="bg-gray-800 rounded-xl p-6 mb-6 border border-gray-700"
+        >
           <h3 className="text-xl font-semibold mb-4 text-white">
             {editingAppliance ? "Edit Appliance" : "Add Appliance"}
           </h3>
@@ -185,28 +201,52 @@ const Appliances = () => {
         <table className="w-full">
           <thead className="bg-gray-700">
             <tr>
-              <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">NAME</th>
-              <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">POWER (W)</th>
-              <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">HOURS/DAY</th>
-              <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">ACTIONS</th>
+              <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">
+                NAME
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">
+                POWER (W)
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">
+                HOURS/DAY
+              </th>
+              <th className="px-6 py-4 text-left text-sm font-medium text-gray-300">
+                ACTIONS
+              </th>
             </tr>
           </thead>
           <tbody>
             {appliances.length === 0 ? (
               <tr>
-                <td colSpan="4" className="text-center py-6 text-gray-400">
+                <td
+                  colSpan="4"
+                  className="text-center py-6 text-gray-400"
+                >
                   No appliances found.
                 </td>
               </tr>
             ) : (
               appliances.map((a) => (
-                <tr key={a.id} className="border-b border-gray-700 hover:bg-gray-700/50 transition-colors">
+                <tr
+                  key={a.id}
+                  className="border-b border-gray-700 hover:bg-gray-700/50 transition-colors"
+                >
                   <td className="px-6 py-4">{a.name}</td>
                   <td className="px-6 py-4 text-gray-300">{a.power_rating}W</td>
                   <td className="px-6 py-4 text-gray-300">{a.hours_per_day}h</td>
                   <td className="px-6 py-4">
-                    <button onClick={() => handleEdit(a)} className="p-2 rounded-lg bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 mr-2">✏️</button>
-                    <button onClick={() => handleDelete(a.id)} className="p-2 rounded-lg bg-red-600/20 text-red-400 hover:bg-red-600/30">🗑️</button>
+                    <button
+                      onClick={() => handleEdit(a)}
+                      className="p-2 rounded-lg bg-blue-600/20 text-blue-400 hover:bg-blue-600/30 mr-2"
+                    >
+                      ✏️
+                    </button>
+                    <button
+                      onClick={() => handleDelete(a.id)}
+                      className="p-2 rounded-lg bg-red-600/20 text-red-400 hover:bg-red-600/30"
+                    >
+                      🗑️
+                    </button>
                   </td>
                 </tr>
               ))
