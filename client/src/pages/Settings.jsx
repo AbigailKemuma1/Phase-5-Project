@@ -38,7 +38,7 @@ const Settings = () => {
 
   const fetchUserProfile = async () => {
     try {
-      const token = localStorage.getItem('access_token');
+      const token = localStorage.getItem('token');
       if (!token) {
         setError('Please log in to view settings');
         setLoading(false);
@@ -114,7 +114,7 @@ const Settings = () => {
   const handleSave = async () => {
     try {
       setSaveStatus('saving');
-      const token = localStorage.getItem('access_token');
+      const token = localStorage.getItem('token');
       
       if (!token) {
         setError('Please log in to save settings');
@@ -166,7 +166,7 @@ const Settings = () => {
     }
 
     try {
-      const token = localStorage.getItem('access_token');
+      const token = localStorage.getItem('token');
       
       if (!token) {
         setError('Please log in to change password');
@@ -209,7 +209,7 @@ const Settings = () => {
     }
 
     try {
-      const token = localStorage.getItem('access_token');
+      const token = localStorage.getItem('token');
       
       if (!token) {
         setError('Please log in to delete account');
@@ -225,7 +225,7 @@ const Settings = () => {
       });
 
       if (response.ok) {
-        localStorage.removeItem('access_token');
+        localStorage.removeItem('token');
         window.location.href = '/';
       } else {
         const errorData = await response.json();
