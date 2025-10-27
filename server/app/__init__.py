@@ -1,8 +1,11 @@
-from flask import Flask
+from flask import Flask, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 from flask_bcrypt import Bcrypt
 from flask_jwt_extended import JWTManager
 from flask_cors import CORS
+import openai
+import os
+import logging
 
 # Initialize extensions
 db = SQLAlchemy()
@@ -25,19 +28,9 @@ def create_app():
     from app.routes.auth import auth_bp
     from app.routes.appliances import appliance_bp
 
-
-    # Register blueprints
+    # Register blueprints with proper prefixes
     app.register_blueprint(auth_bp, url_prefix="/auth")
-    app.register_blueprint(appliance_bp)  # already includes /appliances/ in its routes
-
-<<<<<<< HEAD
-    # Create database tables if they don't exist
-=======
-    # --- Integrate /chat route from chatbot.py ---
-    import openai
-    import os
-    import logging
-    from flask import request, jsonify
+    app.register_blueprint(appliance_bp, url_prefix="/appliances")  # ✅ fixed prefix
 
     # Set up logging
     logging.basicConfig(level=logging.INFO)
@@ -105,11 +98,13 @@ def create_app():
             openai.api_key = os.getenv("OPENAI_API_KEY")
             if not openai.api_key:
                 logger.warning("No OpenAI API key set - using fallback response")
-                answer = "I'm currently in maintenance mode. Here are some general energy-saving tips:\n" + \
-                        "1. Turn off lights when not in use\n" + \
-                        "2. Use energy-efficient appliances\n" + \
-                        "3. Keep your thermostat at optimal temperatures\n" + \
-                        "4. Regular maintenance of HVAC systems"
+                answer = (
+                    "I'm currently in maintenance mode. Here are some general energy-saving tips:\n"
+                    "1. Turn off lights when not in use\n"
+                    "2. Use energy-efficient appliances\n"
+                    "3. Keep your thermostat at optimal temperatures\n"
+                    "4. Regular maintenance of HVAC systems"
+                )
             else:
                 logger.info(f"Sending request to OpenAI API for user {user_id}")
                 response = openai.ChatCompletion.create(
@@ -132,7 +127,7 @@ def create_app():
 
         return jsonify({"response": answer})
 
->>>>>>> origin/ali
+    # Create database tables if they don't exist
     with app.app_context():
         db.create_all()
 
