@@ -2,11 +2,12 @@ import { Link } from 'react-router-dom';
 import DashboardLayout from '../components/DashboardLayout';
 
 const Dashboard = () => {
+  const username = localStorage.getItem('username') || 'User';
   return (
     <DashboardLayout title="Dashboard">
           {/* Welcome Section */}
           <div className="mb-8">
-            <h2 className="text-4xl font-bold mb-2">Welcome back, John!</h2>
+            <h2 className="text-4xl font-bold mb-2">Welcome back, {username}!</h2>
             <p className="text-gray-400 text-lg">Here's your energy consumption overview for today.</p>
           </div>
 

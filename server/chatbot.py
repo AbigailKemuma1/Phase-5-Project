@@ -1,23 +1,3 @@
-
-from flask import Flask, request, jsonify
-from flask_cors import CORS
-import openai
-import os
-from config import Config
-import logging
-from dotenv import load_dotenv
-
-# Load environment variables from .env
-load_dotenv()
-
-# Set up logging
-logging.basicConfig(level=logging.INFO)
-logger = logging.getLogger(__name__)
-
-app = Flask(__name__)
-app.config.from_object(Config)
-CORS(app)  # Enable CORS for all routes
-
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 import openai
@@ -69,14 +49,14 @@ conversations = {}
 
 @app.route("/chat", methods=["POST", "OPTIONS"])
 def chat():
-    logger.info(f"Received {request.method} request from {request.origin if hasattr(request, 'origin') else 'unknown'}")
+    logger.info(f"Received {request.method} request from {request.origin}")
     if request.method == "OPTIONS":
         logger.info("Handling CORS preflight request")
-        response = app.make_response(('', 200))
+        response = jsonify({"message": "CORS preflight passed"})
         response.headers.add('Access-Control-Allow-Origin', '*')
-        response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+        response.headers.add('Access-Control-Allow-Headers', 'Content-Type')
         response.headers.add('Access-Control-Allow-Methods', 'POST, OPTIONS')
-        return response
+        return response, 200
 
     data = request.get_json()
     if not data:
@@ -124,13 +104,13 @@ def chat():
                     "4. Regular maintenance of HVAC systems"
         else:
             logger.info(f"Sending request to OpenAI API for user {user_id}")
-            response = openai.chat.completions.create(
-                model="gpt-3.5-turbo",
+            response = openai.ChatCompletion.create(
+                model="gpt-4",
                 messages=conversations[user_id],
                 temperature=0.7,
                 max_tokens=200
             )
-            answer = response.choices[0].message.content.strip()
+            answer = response.choices[0].message["content"].strip()
             
         # Save AI response to conversation
         conversations[user_id].append({"role": "assistant", "content": answer})

@@ -1,8 +1,8 @@
 from flask import Blueprint, request, jsonify
-from ..models import User
-from .. import db, bcrypt
+from app.models import User
+from app import db, bcrypt
 from flask_jwt_extended import create_access_token
-from ..schemas import UserSchema
+from app.schemas import UserSchema
 
 auth_bp = Blueprint('auth', __name__)
 user_schema = UserSchema()
@@ -36,25 +36,16 @@ def login():
         return jsonify({"message": "CORS preflight passed"}), 200
 
     data = request.json
-    print("[LOGIN ATTEMPT] Data received:", data)
     email = data.get("email")
     password = data.get("password")
 
     user = User.query.filter_by(email=email).first()
-    if user:
-        print(f"[LOGIN] Found user: {user.email}")
-        if bcrypt.check_password_hash(user.password, password):
-            print("[LOGIN] Password correct. Generating token.")
-            token = create_access_token(identity=user.id)
-            return jsonify({
-                "access_token": token,
-                "username": user.username,
-                "email": user.email
-            }), 200
-        else:
-            print("[LOGIN] Password incorrect.")
-    else:
-        print(f"[LOGIN] No user found for email: {email}")
+    if user and bcrypt.check_password_hash(user.password, password):
+        token = create_access_token(identity=user.id)
+        return jsonify({
+            "access_token": token,
+            "username": user.username,
+            "email": user.email
+        }), 200
 
-    print("[LOGIN] Invalid credentials.")
     return jsonify({"msg": "Invalid credentials"}), 401
