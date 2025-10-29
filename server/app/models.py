@@ -13,9 +13,15 @@ class User(db.Model):
     appliances = db.relationship(
         "Appliance", backref="user", lazy=True, cascade="all, delete-orphan"
     )
+
     # One user → many appliance usage records
     appliance_usages = db.relationship(
         "ApplianceUsage", backref="user", lazy=True, cascade="all, delete-orphan"
+    )
+
+    # One user → one settings entry
+    settings = db.relationship(
+        "UserSettings", backref="user", uselist=False, cascade="all, delete-orphan"
     )
 
     def to_dict(self):
@@ -23,7 +29,8 @@ class User(db.Model):
             "id": self.id,
             "username": self.username,
             "email": self.email,
-            "appliances": [a.to_dict() for a in self.appliances]
+            "appliances": [a.to_dict() for a in self.appliances],
+            "settings": self.settings.to_dict() if self.settings else None
         }
 
 
@@ -32,12 +39,11 @@ class Appliance(db.Model):
 
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
-    power_rating = db.Column(db.Float, nullable=False)        # kW or W
-    hours_per_day = db.Column(db.Float, nullable=False)       # average hours used per day
+    power_rating = db.Column(db.Float, nullable=False)
+    hours_per_day = db.Column(db.Float, nullable=False)
 
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
 
-    # One appliance → many usage records
     usages = db.relationship(
         "ApplianceUsage", backref="appliance", lazy=True, cascade="all, delete-orphan"
     )
@@ -59,8 +65,8 @@ class ApplianceUsage(db.Model):
     user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=False)
     appliance_id = db.Column(db.Integer, db.ForeignKey("appliances.id"), nullable=False)
     date = db.Column(db.Date, nullable=False, default=datetime.utcnow)
-    hour = db.Column(db.Integer, nullable=False)  # 0–23
-    usage = db.Column(db.Float, nullable=False)  # kWh used during this hour
+    hour = db.Column(db.Integer, nullable=False)
+    usage = db.Column(db.Float, nullable=False)
 
     def to_dict(self):
         return {
@@ -70,4 +76,23 @@ class ApplianceUsage(db.Model):
             "date": self.date.isoformat(),
             "hour": self.hour,
             "usage": self.usage
+        }
+
+
+class UserSettings(db.Model):
+    __tablename__ = "user_settings"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), unique=True, nullable=False)
+    theme = db.Column(db.String(10), default="light")
+    notifications = db.Column(db.Boolean, default=True)
+    language = db.Column(db.String(20), default="English")
+
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "user_id": self.user_id,
+            "theme": self.theme,
+            "notifications": self.notifications,
+            "language": self.language
         }
