@@ -11,6 +11,7 @@ const Dashboard = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    console.log("JWT token being sent:", token);
     const fetchAnalytics = async () => {
       try {
         const response = await fetch(API_URL, {
@@ -33,15 +34,18 @@ const Dashboard = () => {
     return (
       <DashboardLayout title="Dashboard">
         <div className="text-gray-400 text-center mt-20">Loading analytics...</div>
+        <div className="text-red-500 text-center mt-4 font-bold">DEBUG: Dashboard component is rendering!</div>
       </DashboardLayout>
     );
   }
 
-  if (!analytics || analytics.message) {
+  // Defensive checks for API response
+  if (!analytics || analytics.message || !analytics.summary || !analytics.dailyData || !analytics.appliances || !analytics.insights) {
     return (
       <DashboardLayout title="Dashboard">
         <div className="text-gray-400 text-center mt-20">
-          No analytics data available.
+          No analytics data available or data is incomplete.<br />
+          Please check your connection or try again later.
         </div>
       </DashboardLayout>
     );

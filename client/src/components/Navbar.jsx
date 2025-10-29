@@ -36,6 +36,24 @@ const Navbar = () => {
               About
               <span className="absolute bottom-0 left-0 w-0 h-0.5 bg-gradient-to-r from-emerald-500 to-teal-500 transition-all duration-300 group-hover:w-full"></span>
             </button>
+              <Link
+                to="/dashboard"
+                className="text-gray-600 hover:text-emerald-600 font-semibold transition-colors"
+              >
+                Dashboard
+              </Link>
+              <Link
+                to="/appliances"
+                className="text-gray-600 hover:text-emerald-600 font-semibold transition-colors"
+              >
+                Appliances
+              </Link>
+              <Link
+                to="/analytics"
+                className="text-gray-600 hover:text-emerald-600 font-semibold transition-colors"
+              >
+                Analytics
+              </Link>
             <Link
               to="/login"
               className="text-gray-600 hover:text-teal-600 font-semibold transition-colors"

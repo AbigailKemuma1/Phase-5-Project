@@ -7,6 +7,7 @@ import Dashboard from './pages/Dashboard';
 import Appliances from './pages/Appliances';
 import Analytics from './pages/Analytics';
 import EnergyAdvisor from './components/EnergyAdvisor';
+import Chatbot from "./components/Chatbot";
 
 function App() {
   return (
@@ -22,6 +23,7 @@ function App() {
           <Route path="/settings" element={<Settings />} />
         </Routes>
       </div>
+      <Chatbot />
     </Router>
   );
 }
