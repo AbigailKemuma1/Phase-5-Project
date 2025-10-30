@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import EnergyChatbot from './EnergyChatbot';
 
 const DashboardLayout = ({ children, title }) => {
   const [sidebarOpen, setSidebarOpen] = useState(true);
@@ -98,6 +99,7 @@ const DashboardLayout = ({ children, title }) => {
       </div>
 
       {/* Floating AI Chatbot */}
+      <EnergyChatbot />
     </div>
   );
 };
