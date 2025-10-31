@@ -49,6 +49,9 @@ const Login = () => {
         if (data.username) {
           localStorage.setItem('username', data.username);
         }
+        if (data.email) {
+          localStorage.setItem('email', data.email);
+        }
         setMessage('Login successful!');
         navigate('/dashboard');
       } else {
